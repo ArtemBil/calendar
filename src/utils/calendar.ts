@@ -10,7 +10,7 @@ export const week = [
   "Thursday",
   "Friday",
   "Saturday",
-] as const;
+];
 
 export const currentDate = new Date();
 
