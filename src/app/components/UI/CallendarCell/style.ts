@@ -2,13 +2,13 @@ import { styled } from "@mui/system";
 import { Box } from "@mui/material";
 
 export const ListItem = styled(Box, {
-  shouldForwardProp(propName: PropertyKey): propName is ForwardedProps {
-    return !["isActive", "weekDays", "isToday"].includes(propName);
+  shouldForwardProp(propName: PropertyKey) {
+    return !["isActive", "weekDays", "isToday"].includes(propName as string);
   },
 })(
   (props: {
     isActive: boolean;
-    weekDays: [];
+    weekDays: string[];
     isToday: boolean | undefined;
   }) => ({
     background: props.isToday ? "#bcbec0" : "#E2E4E6",
@@ -24,7 +24,7 @@ export const ListItem = styled(Box, {
 );
 
 export const CalendarCellDay = styled(Box, {
-  shouldForwardProp(propName: PropertyKey): propName is ForwardedProps {
+  shouldForwardProp(propName: PropertyKey) {
     return propName !== "isActive";
   },
 })((props: { isActive: boolean | undefined }) => ({

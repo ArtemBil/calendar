@@ -7,7 +7,7 @@ export const AvailableLabelsList = styled(Box)({
   marginBottom: "32px",
 });
 export const AvailableLabelsListItem = styled(Box, {
-  shouldForwardProp(propName: PropertyKey): propName is ForwardedProps {
+  shouldForwardProp(propName: PropertyKey) {
     return propName !== "labelColor";
   },
 })(({ labelColor }: { labelColor: string }) => ({

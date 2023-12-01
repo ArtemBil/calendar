@@ -15,7 +15,7 @@ export const ColorPickerBox = styled(Box)({
 });
 
 export const SelectedColorBox = styled(Box, {
-  shouldForwardProp(propName: PropertyKey): propName is ForwardedProps {
+  shouldForwardProp(propName: PropertyKey) {
     return propName !== "labelColor";
   },
 })(({ labelColor }: { labelColor: string }) => ({

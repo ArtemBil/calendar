@@ -5,7 +5,7 @@ import {
 } from "@/app/components/UI/WeekDays/style";
 
 interface WeekDaysProps {
-  weekDays: [];
+  weekDays: string[];
 }
 
 const WeekDays: React.FC<WeekDaysProps> = ({ weekDays }) => {

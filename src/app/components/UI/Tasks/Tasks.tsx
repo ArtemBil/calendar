@@ -22,7 +22,7 @@ const Tasks: React.FC<TasksProps> = ({ tasks, cellKey, open, handleClose }) => {
         <TaskContainer onClick={handleOnClick}>
           {tasks && tasks.length
             ? tasks.map((task, index, array) => {
-                return <Task task={task} cellKey={cellKey} />;
+                return <Task key={cellKey} task={task} cellKey={cellKey} />;
               })
             : null}
         </TaskContainer>

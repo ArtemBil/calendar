@@ -12,7 +12,7 @@ import {
 
 const CalendarCell: React.FC<
   CalendarType & {
-    weekDays: [];
+    weekDays: string[];
   }
 > = ({ id, isActive, isToday, day, holidays, tasks, weekDays }) => {
   const { drop, taskModalOpen, handleTaskModalOpen, handleTaskModalClose } =
