@@ -1,30 +1,30 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Box, Button, ButtonGroup } from "@mui/material";
-import CalendarCell from "@/app/components/UI/CallendarCell/CallendarCell";
-import SortByLabel from "@/app/components/UI/SortByLabel";
-import SortByTask from "@/app/components/UI/SortByTask";
-import { CalendarType } from "@/types/calendar-types";
-import CalendarActions from "@/app/components/UI/CalendarActions";
-import CalendarDataImporter from "@/app/components/UI/CalendarDataImporter/CalendarDataImporter";
-import CalendarDataExporter from "@/app/components/UI/CalendarDataExporter";
-import CalendarDataHtmlToImageSaver from "@/app/components/UI/CalendarDataHtmlToImageSaver";
-import useCalendar from "@/app/components/UI/Calendar/useCalendar";
-import WeekDays from "@/app/components/UI/WeekDays";
+import React from 'react';
+import { Box, Button, ButtonGroup } from '@mui/material';
+import CalendarCell from '@/app/components/UI/CallendarCell/CallendarCell';
+import SortByLabel from '@/app/components/UI/SortByLabel';
+import SortByTask from '@/app/components/UI/SortByTask';
+import { CalendarType } from '@/types/calendar-types';
+import CalendarActions from '@/app/components/UI/CalendarActions';
+import CalendarDataImporter from '@/app/components/UI/CalendarDataImporter/CalendarDataImporter';
+import CalendarDataExporter from '@/app/components/UI/CalendarDataExporter';
+import CalendarDataHtmlToImageSaver from '@/app/components/UI/CalendarDataHtmlToImageSaver';
+import useCalendar from '@/app/components/UI/Calendar/useCalendar';
+import WeekDays from '@/app/components/UI/WeekDays';
 import {
   CalendarActionsContainer,
   CalendarCellsList,
   CalendarDateTitle,
-} from "@/app/components/UI/Calendar/style";
-import FiltersRow from "@/app/components/UI/FiltersRow";
-import AvailableLabels from "@/app/components/UI/AvailableLabels";
-import CreateLabel from "@/app/components/UI/CreateLabel";
+} from '@/app/components/UI/Calendar/style';
+import FiltersRow from '@/app/components/UI/FiltersRow';
+import AvailableLabels from '@/app/components/UI/AvailableLabels';
+import CreateLabel from '@/app/components/UI/CreateLabel';
 import {
   KeyboardArrowDownOutlined,
   KeyboardArrowUpOutlined,
-} from "@mui/icons-material";
-import Providers from "@/providers/Providers";
+} from '@mui/icons-material';
+import Providers from '@/providers/Providers';
 
 const Calendar = () => {
   const {
@@ -62,8 +62,8 @@ const Calendar = () => {
             </CalendarActions>
           </CalendarActionsContainer>
           <FiltersRow>
-            <SortByLabel calendar={calendarCellsInitial} />
-            <SortByTask calendar={calendarCellsInitial} />
+            <SortByLabel />
+            <SortByTask />
           </FiltersRow>
           <AvailableLabels />
           <Box ref={calendarRef}>

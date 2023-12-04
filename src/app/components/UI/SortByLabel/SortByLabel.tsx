@@ -1,13 +1,11 @@
-import React from "react";
-import { Autocomplete, FormControl, MenuItem, TextField } from "@mui/material";
-import { CalendarType } from "@/types/calendar-types";
-import useSortByLabel from "@/app/components/UI/SortByLabel/useSortByLabel";
-import { Check } from "@mui/icons-material";
+import React from 'react';
+import { Autocomplete, FormControl, MenuItem, TextField } from '@mui/material';
+import useSortByLabel from '@/app/components/UI/SortByLabel/useSortByLabel';
+import { Check } from '@mui/icons-material';
+import useCalendarProvider from '@/hooks/useCalendarProvider';
 
-interface SortByLabelProps {
-  calendar: CalendarType[];
-}
-const SortByLabel: React.FC<SortByLabelProps> = ({ calendar }) => {
+const SortByLabel = () => {
+  const calendar = useCalendarProvider();
   const { handleChange, allLabels } = useSortByLabel(calendar);
 
   return (
@@ -30,12 +28,7 @@ const SortByLabel: React.FC<SortByLabelProps> = ({ calendar }) => {
           />
         )}
         renderOption={(props, option, { selected }) => (
-          <MenuItem
-            {...props}
-            key={option.id}
-            value={option.name}
-            sx={{ justifyContent: "space-between" }}
-          >
+          <MenuItem key={props.id} value={option.name} {...props}>
             {option.name}
             {selected ? <Check color="info" /> : null}
           </MenuItem>

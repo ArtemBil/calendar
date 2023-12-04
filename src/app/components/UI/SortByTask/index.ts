@@ -1,1 +1,1 @@
-export { default } from "./SortByTask";
+export { default } from './SortByTask';

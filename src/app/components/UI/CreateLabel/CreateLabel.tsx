@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Button } from "@mui/material";
-import LabelModal from "@/app/components/UI/LabelModal";
-import { ActionsType, LabelActions } from "@/types/modal-types";
-import { v1 as uuidv1 } from "uuid";
-import { createLabel } from "@/store/slices/labels-slice";
-import { useAppDispatch } from "@/hooks/store/hooks";
+import React, { useState } from 'react';
+import { Button } from '@mui/material';
+import LabelModal from '@/app/components/UI/LabelModal';
+import { ActionsType, LabelActions } from '@/types/modal-types';
+import { v1 as uuidv1 } from 'uuid';
+import { createLabel } from '@/store/slices/labels-slice';
+import { useAppDispatch } from '@/hooks/store/hooks';
 
 const CreateLabel = () => {
   const [open, setOpen] = useState(false);

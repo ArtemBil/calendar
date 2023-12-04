@@ -1,1 +1,1 @@
-export { default } from "./AvailableLabels";
+export { default } from './AvailableLabels';

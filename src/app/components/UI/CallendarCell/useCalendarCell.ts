@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react";
-import { useAppDispatch } from "@/hooks/store/hooks";
-import { useDrop } from "react-dnd";
-import { ItemTypes } from "@/types/item-types";
-import { updateTaskPosition } from "@/store/slices/tasks-slice";
+import React, { useRef, useState } from 'react';
+import { useAppDispatch } from '@/hooks/store/hooks';
+import { useDrop } from 'react-dnd';
+import { ItemTypes } from '@/types/item-types';
+import { updateTaskPosition } from '@/store/slices/tasks-slice';
 
 type dropProps = {
   id: string;
@@ -27,8 +27,7 @@ export default function useCalendarCell(id: string) {
     }),
   });
 
-  // for some reason component is set as li item but event onClick expects HTMLDivElement
-  const handleTaskModalOpen = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleTaskModalOpen = () => {
     setTaskModalOpen(true);
   };
 

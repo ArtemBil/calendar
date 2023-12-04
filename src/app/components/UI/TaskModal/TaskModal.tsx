@@ -1,10 +1,10 @@
-import React from "react";
-import Modal from "@/app/components/UI/Modal";
-import { Autocomplete, FormControl, MenuItem, TextField } from "@mui/material";
-import useTaskModal from "@/app/components/UI/TaskModal/useTaskModal";
-import { Check } from "@mui/icons-material";
-import { LabelType } from "@/types/calendar-types";
-import { ActionsType, OnModalClose } from "@/types/modal-types";
+import React from 'react';
+import Modal from '@/app/components/UI/Modal';
+import { Autocomplete, FormControl, MenuItem, TextField } from '@mui/material';
+import useTaskModal from '@/app/components/UI/TaskModal/useTaskModal';
+import { Check } from '@mui/icons-material';
+import { LabelType } from '@/types/calendar-types';
+import { ActionsType, OnModalClose } from '@/types/modal-types';
 
 interface TaskModalProps {
   open: boolean;
@@ -15,6 +15,7 @@ interface TaskModalProps {
   handleClose: OnModalClose;
   actions: ActionsType[];
 }
+
 const TaskModal: React.FC<TaskModalProps> = ({
   open,
   content,
@@ -25,6 +26,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
   actions,
 }) => {
   const {
+    inputError,
     actionsWithData,
     taskContent,
     taskLabels,
@@ -44,7 +46,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
         multiple
         options={allLabels}
         getOptionLabel={(option) => option.name}
-        defaultValue={taskLabels}
+        value={taskLabels}
         isOptionEqualToValue={(option: LabelType, value: LabelType) => {
           return option.id === value.id;
         }}
@@ -59,12 +61,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
           />
         )}
         renderOption={(props, option: LabelType, { selected }) => (
-          <MenuItem
-            {...props}
-            key={option.id}
-            value={option.name}
-            sx={{ justifyContent: "space-between" }}
-          >
+          <MenuItem {...props} key={props.id} value={option.name}>
             {option.name}
             {selected ? <Check color="info" /> : null}
           </MenuItem>
@@ -72,7 +69,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
       />
       <FormControl>
         <TextField
-          error={!taskContent.length}
+          error={inputError}
           id="standard-basic"
           label="Task content"
           multiline
@@ -80,7 +77,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
           value={taskContent}
           onChange={handleInputChange}
           variant="filled"
-          helperText={!taskContent.length && "This is a required field"}
+          helperText={inputError && 'This is a required field'}
         />
       </FormControl>
     </Modal>

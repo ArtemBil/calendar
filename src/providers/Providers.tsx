@@ -1,11 +1,9 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { store } from "@/store/store";
-import CalendarProvider from "@/providers/CalendarProvider";
-import { CalendarType } from "@/types/calendar-types";
-import { createTheme, ThemeProvider } from "@mui/material";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { DndProvider } from "react-dnd";
+import React from 'react';
+import CalendarProvider from '@/providers/CalendarProvider';
+import { CalendarType } from '@/types/calendar-types';
+import { createTheme, ThemeProvider } from '@mui/material';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -17,8 +15,8 @@ const materialTheme = createTheme({
     MuiFormControl: {
       styleOverrides: {
         root: {
-          width: "100%",
-          margin: "12px 8px 16px 0",
+          width: '100%',
+          margin: '0 8px 16px 0',
         },
       },
     },

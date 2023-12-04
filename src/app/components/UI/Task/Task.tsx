@@ -1,15 +1,16 @@
-import React, { MutableRefObject, useRef } from "react";
-import CalendarLabel from "@/app/components/UI/CalendarLabel";
-import useTask from "@/app/components/UI/Task/useTask";
-import { TaskType } from "@/types/calendar-types";
-import { TaskBox } from "@/app/components/UI/Task/style";
-import TaskModal from "@/app/components/UI/TaskModal";
+import React, { MutableRefObject, useRef } from 'react';
+import CalendarLabel from '@/app/components/UI/CalendarLabel';
+import useTask from '@/app/components/UI/Task/useTask';
+import { TaskType } from '@/types/calendar-types';
+import { TaskBox } from '@/app/components/UI/Task/style';
+import TaskModal from '@/app/components/UI/TaskModal';
 
 interface TaskProps {
   task: TaskType;
   cellKey: string;
   index: number;
 }
+
 const Task: React.FC<TaskProps> = ({ task, cellKey, index }) => {
   const { open, handleOpen, actions, drag, drop, taskRef, handleClose } =
     useTask(task, cellKey, index);

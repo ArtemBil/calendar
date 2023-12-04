@@ -1,7 +1,7 @@
-import React, { ChangeEvent, SyntheticEvent, useState } from "react";
-import { LabelType } from "@/types/calendar-types";
-import { ActionsType, TaskActions } from "@/types/modal-types";
-import { useAppSelector } from "@/hooks/store/hooks";
+import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { LabelType } from '@/types/calendar-types';
+import { ActionsType, TaskActions } from '@/types/modal-types';
+import { useAppSelector } from '@/hooks/store/hooks';
 
 export default function useTaskModal(
   actions: ActionsType[],
@@ -12,8 +12,10 @@ export default function useTaskModal(
   const [taskLabels, setTaskLabels] = React.useState<LabelType[] | []>(
     labels || [],
   );
-  const [taskContent, setTaskContent] = useState(content || "");
+  const [inputError, setInputError] = useState(false);
+  const [taskContent, setTaskContent] = useState(content || '');
   const allLabels = useAppSelector((state) => state.labels);
+
   const handleChange = (
     event: SyntheticEvent<Element, Event>,
     selectedOptions: LabelType[],
@@ -24,6 +26,12 @@ export default function useTaskModal(
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
+    if (!event.target.value) {
+      setInputError(true);
+    } else {
+      setInputError(false);
+    }
+
     setTaskContent(event.target.value);
   };
 
@@ -35,7 +43,7 @@ export default function useTaskModal(
           content: taskContent,
           labels: taskLabels,
           afterAction: () => {
-            setTaskContent("");
+            setTaskContent('');
             setTaskLabels([]);
           },
           validate: () => {
@@ -58,6 +66,7 @@ export default function useTaskModal(
   });
 
   return {
+    inputError,
     allLabels,
     taskLabels,
     taskContent,

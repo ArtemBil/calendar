@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from "react";
+import React, { MouseEventHandler } from 'react';
 
 export type ActionsType = {
   id: string;
@@ -11,17 +11,17 @@ export type OnModalClose = (
     | {}
     | React.MouseEvent<HTMLDivElement>
     | MouseEventHandler<HTMLAnchorElement>,
-  reason?: "backdropClick" | "escapeKeyDown",
+  reason?: 'backdropClick' | 'escapeKeyDown',
 ) => void;
 
 export enum LabelActions {
-  CREATE = "label/create",
-  UPDATE = "label/update",
-  DELETE = "label/delete",
+  CREATE = 'label/create',
+  UPDATE = 'label/update',
+  DELETE = 'label/delete',
 }
 
 export enum TaskActions {
-  CREATE = "task/create",
-  UPDATE = "task/update",
-  DELETE = "task/delete",
+  CREATE = 'task/create',
+  UPDATE = 'task/update',
+  DELETE = 'task/delete',
 }

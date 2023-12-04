@@ -1,11 +1,13 @@
-import prisma from "@/utils/prisma";
-import { NextRequest, NextResponse } from "next/server";
-export const dynamic = "force-dynamic";
+import prisma from '@/utils/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const { id, field, value } = await req.json();
 
-    if (field === "all") {
+    if (field === 'all') {
       await prisma.label.update({
         where: {
           id: id,
@@ -32,7 +34,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(
-        { error: "Invalid input", message: error.message },
+        { error: 'Invalid input', message: error.message },
         { status: 404 },
       );
     }

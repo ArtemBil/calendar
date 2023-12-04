@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 import {
   AvailableLabelsList,
   AvailableLabelsListItem,
-} from "@/app/components/UI/AvailableLabels/style";
-import LabelModal from "@/app/components/UI/LabelModal";
-import useAvailableLabels from "@/app/components/UI/AvailableLabels/useAvaliableLabels";
+} from '@/app/components/UI/AvailableLabels/style';
+import LabelModal from '@/app/components/UI/LabelModal';
+import useAvailableLabels from '@/app/components/UI/AvailableLabels/useAvaliableLabels';
 
 const AvailableLabels = () => {
   const { open, labels, onLabelClick, handleClose, actions, currentLabelInfo } =

@@ -1,20 +1,20 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { LabelType, TaskType } from "@/types/calendar-types";
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { LabelType, TaskType } from '@/types/calendar-types';
 
 const initialState: TaskType[] | [] = [];
 
 type UpdateTaskPayloadAction = {
   id: string;
   key: string;
-  content?: TaskType["content"];
+  content?: TaskType['content'];
   labels?: LabelType[];
   previousLabels?: LabelType[];
 };
 export const loadTasks = createAsyncThunk(
-  "tasks/load",
+  'tasks/load',
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      const response = await fetch("/api/tasks");
+      const response = await fetch('/api/tasks');
       const tasks = await response.json();
       dispatch(setTasks(tasks));
     } catch (e) {
@@ -28,16 +28,16 @@ export const loadTasks = createAsyncThunk(
 export const updateTask = createAsyncThunk<
   { id: string; content?: string; labels?: LabelType[] },
   UpdateTaskPayloadAction
->("tasks/update", async (payload, { rejectWithValue }) => {
+>('tasks/update', async (payload, { rejectWithValue }) => {
   const { id, key, content, labels, previousLabels } = payload;
 
   try {
     if (content && !labels) {
-      const response = await fetch("/api/tasks/update", {
-        method: "POST",
+      const response = await fetch('/api/tasks/update', {
+        method: 'POST',
         body: JSON.stringify({
           id,
-          field: "content",
+          field: 'content',
           value: content,
         }),
       });
@@ -50,11 +50,11 @@ export const updateTask = createAsyncThunk<
     }
 
     if (!content && labels) {
-      const response = await fetch("/api/tasks/update", {
-        method: "POST",
+      const response = await fetch('/api/tasks/update', {
+        method: 'POST',
         body: JSON.stringify({
           id,
-          field: "labels",
+          field: 'labels',
           value: labels,
         }),
       });
@@ -66,11 +66,11 @@ export const updateTask = createAsyncThunk<
       return Promise.reject(response.statusText);
     }
     if (content && labels) {
-      const response = await fetch("/api/tasks/update", {
-        method: "POST",
+      const response = await fetch('/api/tasks/update', {
+        method: 'POST',
         body: JSON.stringify({
           id,
-          field: "all",
+          field: 'all',
           previousLabels,
           value: {
             content,
@@ -86,7 +86,7 @@ export const updateTask = createAsyncThunk<
       return Promise.reject(response.statusText);
     }
 
-    return Promise.reject("Nothing was updated");
+    return Promise.reject('Nothing was updated');
   } catch (e) {
     return rejectWithValue(e);
   }
@@ -100,15 +100,15 @@ type UpdateTaskPositionThunk = {
 export const updateTaskPosition = createAsyncThunk<
   UpdateTaskPositionThunk,
   UpdateTaskPositionThunk
->("tasks/updatePosition", async (payload, { rejectWithValue }) => {
+>('tasks/updatePosition', async (payload, { rejectWithValue }) => {
   try {
     const { id: taskId, currentPosition, targetPosition } = payload;
 
-    const response = await fetch("/api/tasks/update", {
-      method: "POST",
+    const response = await fetch('/api/tasks/update', {
+      method: 'POST',
       body: JSON.stringify({
         id: taskId,
-        field: "updatePosition",
+        field: 'updatePosition',
         value: targetPosition,
       }),
     });
@@ -126,15 +126,15 @@ export const updateTaskPosition = createAsyncThunk<
 export const updateTaskOrder = createAsyncThunk<
   void,
   { id: string; currentOrder: number; newOrder: number; cellKey: string }
->("tasks/updateOrder", async (payload, { dispatch, rejectWithValue }) => {
+>('tasks/updateOrder', async (payload, { dispatch, rejectWithValue }) => {
   try {
     const { id: taskId, currentOrder, newOrder, cellKey } = payload;
 
-    const response = await fetch("/api/tasks/update", {
-      method: "POST",
+    const response = await fetch('/api/tasks/update', {
+      method: 'POST',
       body: JSON.stringify({
         id: taskId,
-        field: "updateOrder",
+        field: 'updateOrder',
         newOrder,
         currentOrder,
         cellKey,
@@ -151,14 +151,14 @@ export const updateTaskOrder = createAsyncThunk<
   }
 });
 
-export const createTask = createAsyncThunk<TaskType, Omit<TaskType, "id">>(
-  "tasks/create",
+export const createTask = createAsyncThunk<TaskType, Omit<TaskType, 'id'>>(
+  'tasks/create',
   async (payload, { rejectWithValue }) => {
     const { content, calendarId, labels, orderNumber } = payload;
 
     try {
-      const response = await fetch("/api/tasks/create", {
-        method: "POST",
+      const response = await fetch('/api/tasks/create', {
+        method: 'POST',
         body: JSON.stringify({
           content: content,
           calendarId,
@@ -181,11 +181,11 @@ export const createTask = createAsyncThunk<TaskType, Omit<TaskType, "id">>(
 );
 
 export const deleteTask = createAsyncThunk<void, { id: string }>(
-  "tasks/create",
+  'tasks/create',
   async (payload, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch("/api/tasks/delete", {
-        method: "DELETE",
+      const response = await fetch('/api/tasks/delete', {
+        method: 'DELETE',
         body: JSON.stringify(payload),
       });
 
@@ -201,11 +201,11 @@ export const deleteTask = createAsyncThunk<void, { id: string }>(
 );
 
 export const importTasks = createAsyncThunk(
-  "tasks/import",
+  'tasks/import',
   async (importedTasks: BodyInit, { dispatch }) => {
     try {
-      const response = await fetch("/api/tasks/import", {
-        method: "POST",
+      const response = await fetch('/api/tasks/import', {
+        method: 'POST',
         body: importedTasks,
       });
 
@@ -218,7 +218,7 @@ export const importTasks = createAsyncThunk(
 );
 
 const tasksSlice = createSlice({
-  name: "tasks",
+  name: 'tasks',
   initialState,
   reducers: {
     setTasks: (state, action) => {

@@ -1,7 +1,9 @@
-import prisma from "@/utils/prisma";
-import { NextRequest, NextResponse } from "next/server";
-import { LabelType } from "@/types/calendar-types";
-export const dynamic = "force-dynamic";
+import prisma from '@/utils/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { LabelType } from '@/types/calendar-types';
+
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const {
@@ -15,7 +17,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     } = await req.json();
 
     switch (field) {
-      case "content":
+      case 'content':
         await prisma.task.update({
           where: {
             id: id,
@@ -27,7 +29,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
         return NextResponse.json({ success: true });
 
-      case "labels":
+      case 'labels':
         await prisma.task.update({
           where: {
             id: id,
@@ -43,7 +45,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         });
 
         return NextResponse.json({ success: true });
-      case "all":
+      case 'all':
         await prisma.task.update({
           where: {
             id: id,
@@ -62,7 +64,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         });
 
         return NextResponse.json({ success: true });
-      case "updatePosition":
+      case 'updatePosition':
         await prisma.task.update({
           where: {
             id: id,
@@ -74,7 +76,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
         return NextResponse.json({ success: true });
 
-      case "updateOrder": {
+      case 'updateOrder': {
         const response = await prisma.task.update({
           where: { id },
           data: {
@@ -114,7 +116,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(
-        { error: "Invalid input", message: error.message },
+        { error: 'Invalid input', message: error.message },
         { status: 404 },
       );
     }

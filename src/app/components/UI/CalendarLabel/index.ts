@@ -1,1 +1,1 @@
-export { default } from "./CalendarLabel";
+export { default } from './CalendarLabel';

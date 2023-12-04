@@ -1,12 +1,10 @@
-import React from "react";
-import { TextField } from "@mui/material";
-import useSortByTask from "@/app/components/UI/SortByTask/useSortByTask";
-import { CalendarType } from "@/types/calendar-types";
+import React from 'react';
+import { TextField } from '@mui/material';
+import useSortByTask from '@/app/components/UI/SortByTask/useSortByTask';
+import useCalendarProvider from '@/hooks/useCalendarProvider';
 
-interface SortByTaskProps {
-  calendar: CalendarType[];
-}
-const SortByTask: React.FC<SortByTaskProps> = ({ calendar }) => {
+const SortByTask = () => {
+  const calendar = useCalendarProvider();
   const { handleChange, searchText } = useSortByTask(calendar);
 
   return (

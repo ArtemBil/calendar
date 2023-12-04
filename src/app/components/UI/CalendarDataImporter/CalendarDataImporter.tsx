@@ -1,12 +1,12 @@
-import React, { ChangeEvent, useCallback, useState } from "react";
-import { Button, TextField } from "@mui/material";
-import { importCalendarDataFromJsonFile } from "@/utils/utils";
-import { useAppDispatch } from "@/hooks/store/hooks";
-import { importTasks } from "@/store/slices/tasks-slice";
+import React, { ChangeEvent, useCallback, useState } from 'react';
+import { Button, InputLabel, TextField } from '@mui/material';
+import { importCalendarDataFromJsonFile } from '@/utils/utils';
+import { useAppDispatch } from '@/hooks/store/hooks';
+import { importTasks } from '@/store/slices/tasks-slice';
 
 const CalendarDataImporter = () => {
   const dispatch = useAppDispatch();
-  const [data, setData] = useState<string | ArrayBuffer | null>("");
+  const [data, setData] = useState<string | ArrayBuffer | null>('');
   const handleImportCalendarData = (event: ChangeEvent<HTMLInputElement>) => {
     importCalendarDataFromJsonFile(event, (importedData) => {
       if (importedData) {
@@ -24,16 +24,21 @@ const CalendarDataImporter = () => {
   }, [data]);
 
   return data ? (
-    <Button onClick={handleSaveImportedCalendarData}>Apply Data</Button>
+    <Button variant="contained" onClick={handleSaveImportedCalendarData}>
+      Confirm Import
+    </Button>
   ) : (
-    <TextField
-      type="file"
-      inputProps={{
-        accept: "application/json",
-      }}
-      onChange={handleImportCalendarData}
-      placeholder="Import calendar data"
-    />
+    <>
+      <InputLabel>Click to import file (.json format only)</InputLabel>
+      <TextField
+        type="file"
+        inputProps={{
+          accept: 'application/json',
+        }}
+        onChange={handleImportCalendarData}
+        placeholder="Import calendar data"
+      />
+    </>
   );
 };
 

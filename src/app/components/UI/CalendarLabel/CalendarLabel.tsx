@@ -1,11 +1,11 @@
-import React from "react";
-import { LabelType } from "@/types/calendar-types";
+import React from 'react';
+import { LabelType } from '@/types/calendar-types';
 import {
   CalendarLabelList,
   CalendarLabelListItem,
-} from "@/app/components/UI/CalendarLabel/style";
-import { Tooltip, tooltipClasses, TooltipProps } from "@mui/material";
-import { styled } from "@mui/system";
+} from '@/app/components/UI/CalendarLabel/style';
+import { Tooltip, tooltipClasses, TooltipProps } from '@mui/material';
+import { styled } from '@mui/system';
 
 type CalendarLabelProps = {
   labels: LabelType[];
@@ -15,7 +15,7 @@ const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: "black",
+    backgroundColor: 'black',
   },
 }));
 

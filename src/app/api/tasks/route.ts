@@ -1,11 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/utils/prisma";
-export const dynamic = "force-dynamic";
+import { NextRequest, NextResponse } from 'next/server';
+import prisma from '@/utils/prisma';
+
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const tasks = await prisma.task.findMany({
       orderBy: {
-        orderNumber: "asc",
+        orderNumber: 'asc',
       },
       include: {
         labels: true,

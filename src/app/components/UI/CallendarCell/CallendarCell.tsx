@@ -1,14 +1,14 @@
-import React from "react";
-import { CalendarType } from "@/types/calendar-types";
-import Holidays from "@/app/components/UI/Holidays";
-import Tasks from "@/app/components/UI/Tasks/Tasks";
-import useCalendarCell from "@/app/components/UI/CallendarCell/useCalendarCell";
+import React from 'react';
+import { CalendarType } from '@/types/calendar-types';
+import Holidays from '@/app/components/UI/Holidays';
+import Tasks from '@/app/components/UI/Tasks/Tasks';
+import useCalendarCell from '@/app/components/UI/CallendarCell/useCalendarCell';
 import {
   ListItem,
   CalendarCellCardCounter,
   CalendarCellDay,
   CalendarCellHeaderBox,
-} from "@/app/components/UI/CallendarCell/style";
+} from '@/app/components/UI/CallendarCell/style';
 
 const CalendarCell: React.FC<
   CalendarType & {
@@ -24,7 +24,7 @@ const CalendarCell: React.FC<
   } = useCalendarCell(id);
   const cardsCount =
     Array.isArray(tasks) && tasks.length
-      ? `${tasks.length} ${tasks.length === 1 ? " card" : " cards"}`
+      ? `${tasks.length} ${tasks.length === 1 ? ' card' : ' cards'}`
       : null;
 
   return (

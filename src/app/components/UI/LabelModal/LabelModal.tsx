@@ -1,17 +1,17 @@
-import React from "react";
-import { FormControl, TextField } from "@mui/material";
-import { SketchPicker } from "react-color";
-import Modal from "@/app/components/UI/Modal";
+import React from 'react';
+import { FormControl, TextField } from '@mui/material';
+import { SketchPicker } from 'react-color';
+import Modal from '@/app/components/UI/Modal';
 import {
   ColorPickerBox,
   ColorPickerContainer,
   ColorPickerFieldContainer,
   ColorPickerOverlay,
   SelectedColorBox,
-} from "@/app/components/UI/LabelModal/style";
-import { useLabelModal } from "@/app/components/UI/LabelModal/useLabelModal";
-import { ActionsType, OnModalClose } from "@/types/modal-types";
-import { LabelType } from "@/types/calendar-types";
+} from '@/app/components/UI/LabelModal/style';
+import { useLabelModal } from '@/app/components/UI/LabelModal/useLabelModal';
+import { ActionsType, OnModalClose } from '@/types/modal-types';
+import { LabelType } from '@/types/calendar-types';
 
 interface CreateLabelModalProps {
   open: boolean;
@@ -29,6 +29,7 @@ const LabelModal: React.FC<CreateLabelModalProps> = ({
   currentLabelInfo,
 }) => {
   const {
+    inputError,
     labelColor,
     labelName,
     actionsWithData,
@@ -66,14 +67,14 @@ const LabelModal: React.FC<CreateLabelModalProps> = ({
 
       <FormControl>
         <TextField
-          error={!labelName.length}
+          error={inputError}
           id="standard-basic"
           label="Label name"
           required={true}
-          variant="outlined"
+          variant="filled"
           value={labelName}
           onChange={handleInputChange}
-          helperText={!labelName.length && "This is a required field"}
+          helperText={inputError && 'This is a required field'}
         />
       </FormControl>
     </Modal>

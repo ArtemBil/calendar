@@ -1,5 +1,6 @@
-import React from "react";
-import { Box, Button, Popover } from "@mui/material";
+import React from 'react';
+import { Box, Button, Popover } from '@mui/material';
+import { ActionsContainer } from '@/app/components/UI/CalendarActions/style';
 
 interface CalendarActionsProps {
   children: React.ReactNode;
@@ -19,7 +20,7 @@ const CalendarActions: React.FC<CalendarActionsProps> = ({ children }) => {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  const id = open ? 'simple-popover' : undefined;
 
   return (
     <>
@@ -33,17 +34,15 @@ const CalendarActions: React.FC<CalendarActionsProps> = ({ children }) => {
           anchorEl={anchorEl}
           onClose={handleClose}
           anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
+            vertical: 'bottom',
+            horizontal: 'right',
           }}
           transformOrigin={{
-            horizontal: "right",
-            vertical: "top",
+            horizontal: 'right',
+            vertical: 'top',
           }}
         >
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            {children}
-          </Box>
+          <ActionsContainer>{children}</ActionsContainer>
         </Popover>
       </Box>
     </>

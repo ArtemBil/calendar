@@ -1,12 +1,12 @@
-import React, { Fragment } from "react";
-import { Button } from "@mui/material";
-import { Modal as MuiModal } from "@mui/material";
-import { ActionsType, OnModalClose } from "@/types/modal-types";
+import React, { Fragment } from 'react';
+import { Button } from '@mui/material';
+import { Modal as MuiModal } from '@mui/material';
+import { ActionsType, OnModalClose } from '@/types/modal-types';
 import {
   ButtonGroupActions,
   ModalContent,
   ModalHeader,
-} from "@/app/components/UI/Modal/style";
+} from '@/app/components/UI/Modal/style';
 
 interface ModalProps {
   header: string;

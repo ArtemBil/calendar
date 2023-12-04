@@ -1,19 +1,16 @@
-import React, { useCallback, useRef, useState } from "react";
-import { useAppDispatch } from "@/hooks/store/hooks";
-import { useDrag, useDrop } from "react-dnd";
-import { ItemTypes } from "@/types/item-types";
-import _ from "lodash";
+import React, { useCallback, useRef, useState } from 'react';
+import { useAppDispatch } from '@/hooks/store/hooks';
+import { useDrag, useDrop } from 'react-dnd';
+import { ItemTypes } from '@/types/item-types';
+import _ from 'lodash';
 import {
-  createTask,
-  loadTasks,
   updateTask,
   updateTaskOrder,
   deleteTask as deleteTaskAction,
-} from "@/store/slices/tasks-slice";
-import { LabelType, TaskType } from "@/types/calendar-types";
-import useCalendarProvider from "@/hooks/useCalendarProvider";
-import { ActionsType, TaskActions } from "@/types/modal-types";
-import { Button } from "@mui/material";
+} from '@/store/slices/tasks-slice';
+import { LabelType, TaskType } from '@/types/calendar-types';
+import { ActionsType, TaskActions } from '@/types/modal-types';
+import { Button } from '@mui/material';
 
 export default function useTask(
   task: TaskType,

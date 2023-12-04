@@ -1,7 +1,9 @@
-import prisma from "@/utils/prisma";
-import { NextRequest, NextResponse } from "next/server";
-import { TaskType } from "@/types/calendar-types";
-export const dynamic = "force-dynamic";
+import prisma from '@/utils/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { TaskType } from '@/types/calendar-types';
+
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const importedTasks = (await req.json()) as TaskType[];
@@ -30,7 +32,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(
-        { error: "Invalid input", message: error.message },
+        { error: 'Invalid input', message: error.message },
         { status: 404 },
       );
     }

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 import {
   appendTasks,
   appendWorldWideHolidays,
@@ -8,14 +8,14 @@ import {
   getPrevMonth,
   loadWorldWideHoliday,
   week,
-} from "@/utils/calendar";
-import { RootState } from "@/store/store";
-import { HolidayType } from "@/types/holiday-types";
-import { CalendarType } from "@/types/calendar-types";
-import _ from "lodash";
-import { useAppDispatch, useAppSelector } from "@/hooks/store/hooks";
-import { loadTasks } from "@/store/slices/tasks-slice";
-import { loadLabels } from "@/store/slices/labels-slice";
+} from '@/utils/calendar';
+import { RootState } from '@/store/store';
+import { HolidayType } from '@/types/holiday-types';
+import { CalendarType } from '@/types/calendar-types';
+import _ from 'lodash';
+import { useAppDispatch, useAppSelector } from '@/hooks/store/hooks';
+import { loadTasks } from '@/store/slices/tasks-slice';
+import { loadLabels } from '@/store/slices/labels-slice';
 
 export default function useCalendar() {
   const calendarRef = useRef<HTMLDivElement | null>(null);
@@ -46,13 +46,9 @@ export default function useCalendar() {
     })();
   }, []);
 
-  useEffect(() => {
-    console.log(currentSelectedDate);
-  }, [currentSelectedDate]);
-
   const currentDateTitle =
-    currentSelectedDate.toLocaleString("default", { month: "long" }) +
-    " " +
+    currentSelectedDate.toLocaleString('default', { month: 'long' }) +
+    ' ' +
     currentSelectedDate.getFullYear();
 
   const onPreviousMonthClick = () => {
@@ -63,7 +59,6 @@ export default function useCalendar() {
 
   const onNextMonthClick = () => {
     const nextMonthDate = getNextMonth(currentSelectedDate);
-    console.log(nextMonthDate);
     setCurrentSelectedYear(nextMonthDate);
   };
 

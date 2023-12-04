@@ -1,8 +1,7 @@
-import { useAppDispatch, useAppSelector } from "@/hooks/store/hooks";
-import { SyntheticEvent, useState } from "react";
-import { SelectChangeEvent } from "@mui/material";
-import { filterByLabel } from "@/store/slices/filters-slice";
-import { CalendarType, LabelType } from "@/types/calendar-types";
+import { useAppDispatch, useAppSelector } from '@/hooks/store/hooks';
+import { SyntheticEvent, useState } from 'react';
+import { filterByLabel } from '@/store/slices/filters-slice';
+import { CalendarType, LabelType } from '@/types/calendar-types';
 
 export default function useSortByLabel(calendar: CalendarType[]) {
   const allLabels = useAppSelector((state) => state.labels);

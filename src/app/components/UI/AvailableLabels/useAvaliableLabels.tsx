@@ -1,13 +1,13 @@
-import { useAppDispatch, useAppSelector } from "@/hooks/store/hooks";
-import React, { useState } from "react";
-import { ActionsType, LabelActions } from "@/types/modal-types";
-import { Button } from "@mui/material";
+import { useAppDispatch, useAppSelector } from '@/hooks/store/hooks';
+import React, { useState } from 'react';
+import { ActionsType, LabelActions } from '@/types/modal-types';
+import { Button } from '@mui/material';
 import {
   updateLabel,
   deletedLabel as deleteLabelAction,
-} from "@/store/slices/labels-slice";
-import { loadTasks } from "@/store/slices/tasks-slice";
-import { LabelType } from "@/types/calendar-types";
+} from '@/store/slices/labels-slice';
+import { loadTasks } from '@/store/slices/tasks-slice';
+import { LabelType } from '@/types/calendar-types';
 
 export default function useAvailableLabels() {
   const labels = useAppSelector((state) => state.labels);
@@ -16,7 +16,7 @@ export default function useAvailableLabels() {
     id: string;
     name: string;
     color: string;
-  }>({ id: "", name: "", color: "" });
+  }>({ id: '', name: '', color: '' });
   const dispatch = useAppDispatch();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -33,9 +33,9 @@ export default function useAvailableLabels() {
       id,
       validate,
     }: {
-      color: LabelType["color"];
-      name: LabelType["name"];
-      id: LabelType["id"];
+      color: LabelType['color'];
+      name: LabelType['name'];
+      id: LabelType['id'];
       validate: () => boolean;
     }) =>
     () => {

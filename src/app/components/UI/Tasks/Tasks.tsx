@@ -1,10 +1,10 @@
-import React from "react";
-import Task from "@/app/components/UI/Task";
-import { TaskType } from "@/types/calendar-types";
-import useTasks from "@/app/components/UI/Tasks/useTasks";
-import { TaskContainer } from "@/app/components/UI/Tasks/style";
-import TaskModal from "@/app/components/UI/TaskModal";
-import { OnModalClose } from "@/types/modal-types";
+import React from 'react';
+import Task from '@/app/components/UI/Task';
+import { TaskType } from '@/types/calendar-types';
+import useTasks from '@/app/components/UI/Tasks/useTasks';
+import { TaskContainer } from '@/app/components/UI/Tasks/style';
+import TaskModal from '@/app/components/UI/TaskModal';
+import { OnModalClose } from '@/types/modal-types';
 
 interface TasksProps {
   tasks: TaskType[] | undefined;

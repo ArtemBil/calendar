@@ -1,4 +1,4 @@
-import { HolidayType } from "@/types/holiday-types";
+import { HolidayType } from '@/types/holiday-types';
 
 export type CalendarType = {
   // Date string representation
@@ -25,12 +25,3 @@ export type TaskType = {
   labels?: LabelType[];
   orderNumber: number;
 };
-
-export type TasksType = {
-  [key: string]: TaskType[];
-};
-
-export enum GridType {
-  MONTH = "month",
-  WEEK = "week",
-}

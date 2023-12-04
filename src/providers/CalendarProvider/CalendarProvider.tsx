@@ -1,5 +1,5 @@
-import React, { createContext } from "react";
-import { CalendarType } from "@/types/calendar-types";
+import React, { createContext } from 'react';
+import { CalendarType } from '@/types/calendar-types';
 
 export const CalendarContext = createContext<CalendarType[]>([]);
 

@@ -5,7 +5,7 @@ export type HolidayType = {
   countryCode: string;
   fixed: boolean;
   global: boolean;
-  counties: ["string"] | null;
+  counties: ['string'] | null;
   launchYear: number | null;
-  types: ["Public"];
+  types: ['Public'];
 };

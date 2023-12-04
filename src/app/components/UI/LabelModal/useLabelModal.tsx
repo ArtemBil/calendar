@@ -1,18 +1,19 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { ActionsType, LabelActions } from "@/types/modal-types";
-import { LabelType } from "@/types/calendar-types";
-import { ColorChangeHandler, ColorResult } from "react-color";
+import { ChangeEvent, useEffect, useState } from 'react';
+import { ActionsType, LabelActions } from '@/types/modal-types';
+import { LabelType } from '@/types/calendar-types';
+import { ColorChangeHandler, ColorResult } from 'react-color';
 
 export function useLabelModal(
   actions: ActionsType[],
   currentLabelInfo: LabelType | undefined,
 ) {
   const [labelInfo, setLabelInfo] = useState<LabelType>({
-    color: "",
-    id: "",
-    name: "",
+    color: '',
+    id: '',
+    name: '',
   });
   const [colorPickerVisible, setColorPickerVisible] = useState(false);
+  const [inputError, setInputError] = useState(false);
 
   useEffect(() => {
     if (currentLabelInfo) {
@@ -22,13 +23,16 @@ export function useLabelModal(
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
+    if (!event.target.value) {
+      setInputError(true);
+    } else {
+      setInputError(false);
+    }
+
     setLabelInfo((prevState) => ({ ...prevState, name: event.target.value }));
   };
 
-  const onColorPickerChange = (
-    color: ColorResult,
-    event: ChangeEvent<HTMLInputElement>,
-  ) => {
+  const onColorPickerChange = (color: ColorResult) => {
     setLabelInfo((prevState) => ({ ...prevState, color: color.hex }));
   };
 
@@ -51,9 +55,9 @@ export function useLabelModal(
           ...labelInfo,
           afterAction: () => {
             setLabelInfo({
-              name: "",
-              color: "",
-              id: "",
+              name: '',
+              color: '',
+              id: '',
             });
           },
           validate: () => {
@@ -76,6 +80,7 @@ export function useLabelModal(
   });
 
   return {
+    inputError,
     labelName: labelInfo.name,
     colorPickerVisible,
     labelColor: labelInfo.color,

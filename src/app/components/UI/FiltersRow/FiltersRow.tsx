@@ -1,6 +1,6 @@
-import React from "react";
-import { Box } from "@mui/material";
-import { FiltersRowContainer } from "@/app/components/UI/FiltersRow/style";
+import React from 'react';
+import { Box } from '@mui/material';
+import { FiltersRowContainer } from '@/app/components/UI/FiltersRow/style';
 
 interface FiltersRowProps {
   children: React.ReactNode;

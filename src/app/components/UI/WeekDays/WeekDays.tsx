@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 import {
   WeekDaysList,
   WeekDaysListItem,
-} from "@/app/components/UI/WeekDays/style";
+} from '@/app/components/UI/WeekDays/style';
 
 interface WeekDaysProps {
   weekDays: string[];

@@ -1,1 +1,1 @@
-export { default } from "./CalendarDataHtmlToImageSaver";
+export { default } from './CalendarDataHtmlToImageSaver';

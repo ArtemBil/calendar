@@ -1,10 +1,10 @@
-import { ChangeEvent, useState } from "react";
-import { useAppDispatch } from "@/hooks/store/hooks";
-import { filterByTask } from "@/store/slices/filters-slice";
-import { CalendarType } from "@/types/calendar-types";
+import { ChangeEvent, useState } from 'react';
+import { useAppDispatch } from '@/hooks/store/hooks';
+import { filterByTask } from '@/store/slices/filters-slice';
+import { CalendarType } from '@/types/calendar-types';
 
 export default function useSortByTask(calendar: CalendarType[]) {
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
   const dispatch = useAppDispatch();
 
   const handleChange = (

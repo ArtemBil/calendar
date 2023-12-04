@@ -1,10 +1,11 @@
-import React, { MutableRefObject } from "react";
-import { Button } from "@mui/material";
-import { downloadCalendarHtmlAsImage } from "@/utils/utils";
+import React, { MutableRefObject } from 'react';
+import { Button } from '@mui/material';
+import { downloadCalendarHtmlAsImage } from '@/utils/utils';
 
 interface CalendarDataHtmlToImageSaverProps {
   calendarRef: MutableRefObject<HTMLDivElement | null>;
 }
+
 const CalendarDataHtmlToImageSaver: React.FC<
   CalendarDataHtmlToImageSaverProps
 > = ({ calendarRef }) => {

@@ -1,9 +1,9 @@
-import { useAppDispatch } from "@/hooks/store/hooks";
-import React from "react";
-import { createTask } from "@/store/slices/tasks-slice";
-import { LabelType, TaskType } from "@/types/calendar-types";
-import { ActionsType, OnModalClose, TaskActions } from "@/types/modal-types";
-import { Button } from "@mui/material";
+import { useAppDispatch } from '@/hooks/store/hooks';
+import React from 'react';
+import { createTask } from '@/store/slices/tasks-slice';
+import { LabelType, TaskType } from '@/types/calendar-types';
+import { ActionsType, OnModalClose, TaskActions } from '@/types/modal-types';
+import { Button } from '@mui/material';
 
 export default function useTasks(
   tasks: TaskType[] | undefined,

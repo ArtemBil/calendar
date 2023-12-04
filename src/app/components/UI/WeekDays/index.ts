@@ -1,1 +1,1 @@
-export { default } from "./WeekDays";
+export { default } from './WeekDays';

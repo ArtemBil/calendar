@@ -1,1 +1,1 @@
-export { default } from "./LabelModal";
+export { default } from './LabelModal';

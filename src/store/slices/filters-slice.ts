@@ -1,10 +1,10 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CalendarType, LabelType } from "@/types/calendar-types";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CalendarType, LabelType } from '@/types/calendar-types';
 
 const initialState: CalendarType[] | [] = [];
 
 const filtersSlice = createSlice({
-  name: "filters",
+  name: 'filters',
   initialState,
   reducers: {
     filterByLabel: (
@@ -17,7 +17,7 @@ const filtersSlice = createSlice({
       const { calendar, selectedLabels } = action.payload;
 
       if (!selectedLabels.length) {
-        state = calendar;
+        state = [];
         return state;
       }
 
@@ -49,7 +49,7 @@ const filtersSlice = createSlice({
         state = [];
       }
 
-      return state;
+      return state.filter((item) => !!item);
     },
     filterByTask: (
       state,
@@ -112,7 +112,7 @@ const filtersSlice = createSlice({
         });
       }
 
-      return state;
+      return state.filter((item) => !!item);
     },
   },
 });

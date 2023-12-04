@@ -1,24 +1,23 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { LabelType } from "@/types/calendar-types";
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { LabelType } from '@/types/calendar-types';
 
 const initialState: LabelType[] | [] = [];
 
 export const loadLabels = createAsyncThunk(
-  "labels/load",
+  'labels/load',
   async (_, { dispatch }) => {
-    const response = await fetch("/api/labels");
-    console.log(response);
+    const response = await fetch('/api/labels');
     const labels = await response.json();
     dispatch(setLabels(labels));
   },
 );
 
 export const createLabel = createAsyncThunk<void | Error, LabelType>(
-  "labels/create",
+  'labels/create',
   async (payload, { dispatch, rejectWithValue }) => {
     try {
-      const response = await fetch("/api/labels/create", {
-        method: "POST",
+      const response = await fetch('/api/labels/create', {
+        method: 'POST',
         body: JSON.stringify(payload),
       });
       dispatch(addLabel(payload));
@@ -32,11 +31,11 @@ export const createLabel = createAsyncThunk<void | Error, LabelType>(
 
 export const deletedLabel = createAsyncThunk<
   void | Error,
-  { id: LabelType["id"] }
->("labels/delete", async (payload, { dispatch, rejectWithValue }) => {
+  { id: LabelType['id'] }
+>('labels/delete', async (payload, { dispatch, rejectWithValue }) => {
   try {
-    const response = await fetch("/api/labels/delete", {
-      method: "DELETE",
+    const response = await fetch('/api/labels/delete', {
+      method: 'DELETE',
       body: JSON.stringify(payload),
     });
 
@@ -51,16 +50,16 @@ export const deletedLabel = createAsyncThunk<
 });
 
 export const updateLabel = createAsyncThunk<LabelType, LabelType>(
-  "labels/update",
+  'labels/update',
   async (payload, { rejectWithValue }) => {
     const { id, name, color } = payload;
 
     try {
-      const response = await fetch("/api/labels/update", {
-        method: "POST",
+      const response = await fetch('/api/labels/update', {
+        method: 'POST',
         body: JSON.stringify({
           id,
-          field: "all",
+          field: 'all',
           value: {
             name,
             color,
@@ -80,7 +79,7 @@ export const updateLabel = createAsyncThunk<LabelType, LabelType>(
 );
 
 const labelsSlice = createSlice({
-  name: "labels",
+  name: 'labels',
   initialState,
   reducers: {
     addLabel(state, action: PayloadAction<LabelType>) {
