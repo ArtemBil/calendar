@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 
 export const TaskBox = styled(Box)({
   backgroundColor: "white",
-  marginInline: "4px",
-  borderRadius: 1,
+  marginBottom: "4px",
+  borderRadius: "4px",
   padding: "4px",
 });

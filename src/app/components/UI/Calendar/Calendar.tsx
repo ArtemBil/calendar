@@ -3,9 +3,6 @@
 import React from "react";
 import { Box, Button, ButtonGroup } from "@mui/material";
 import CalendarCell from "@/app/components/UI/CallendarCell/CallendarCell";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import CreateLabelModal from "@/app/components/UI/CreateLabelModal";
 import SortByLabel from "@/app/components/UI/SortByLabel";
 import SortByTask from "@/app/components/UI/SortByTask";
 import { CalendarType } from "@/types/calendar-types";
@@ -13,7 +10,7 @@ import CalendarActions from "@/app/components/UI/CalendarActions";
 import CalendarDataImporter from "@/app/components/UI/CalendarDataImporter/CalendarDataImporter";
 import CalendarDataExporter from "@/app/components/UI/CalendarDataExporter";
 import CalendarDataHtmlToImageSaver from "@/app/components/UI/CalendarDataHtmlToImageSaver";
-import useCalendar from "@/hooks/useCalendar";
+import useCalendar from "@/app/components/UI/Calendar/useCalendar";
 import WeekDays from "@/app/components/UI/WeekDays";
 import {
   CalendarActionsContainer,
@@ -23,17 +20,17 @@ import {
 import FiltersRow from "@/app/components/UI/FiltersRow";
 import AvailableLabels from "@/app/components/UI/AvailableLabels";
 import CreateLabel from "@/app/components/UI/CreateLabel";
+import {
+  KeyboardArrowDownOutlined,
+  KeyboardArrowUpOutlined,
+} from "@mui/icons-material";
+import Providers from "@/providers/Providers";
 
 const Calendar = () => {
   const {
-    open,
     loading,
-    handleClose,
     calendarCellsInitial,
     tasks,
-    handleOpen,
-    onPreviousYearClick,
-    onNextYearClick,
     onPreviousMonthClick,
     onNextMonthClick,
     calendarRef,
@@ -41,21 +38,21 @@ const Calendar = () => {
     weekDays,
     calendarCells,
   } = useCalendar();
-  console.log(currentDateTitle);
 
-  console.log("Calendar cells", calendarCells);
   return (
-    <DndProvider backend={HTML5Backend}>
+    <Providers calendarData={calendarCells}>
       {loading ? (
         <div>Loading the calendar...</div>
       ) : (
         <>
           <CalendarActionsContainer className="actions">
             <ButtonGroup>
-              <Button onClick={onPreviousYearClick}>Previous year</Button>
-              <Button onClick={onNextYearClick}>Next year</Button>
-              <Button onClick={onPreviousMonthClick}>Previous month</Button>
-              <Button onClick={onNextMonthClick}>Next month</Button>
+              <Button onClick={onPreviousMonthClick}>
+                <KeyboardArrowDownOutlined />
+              </Button>
+              <Button onClick={onNextMonthClick}>
+                <KeyboardArrowUpOutlined />
+              </Button>
             </ButtonGroup>
             <CalendarActions>
               <CreateLabel />
@@ -88,7 +85,7 @@ const Calendar = () => {
           </Box>
         </>
       )}
-    </DndProvider>
+    </Providers>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
-import { Box, Button, ButtonGroup } from "@mui/material";
+import { Button } from "@mui/material";
 import { Modal as MuiModal } from "@mui/material";
-import { ActionsType } from "@/types/modal-types";
+import { ActionsType, OnModalClose } from "@/types/modal-types";
 import {
   ButtonGroupActions,
   ModalContent,
@@ -11,7 +11,7 @@ import {
 interface ModalProps {
   header: string;
   open: boolean;
-  handleClose: Function;
+  handleClose: OnModalClose;
   actions: ActionsType[];
   children: React.ReactNode;
 }
@@ -23,7 +23,6 @@ const Modal: React.FC<ModalProps> = ({
   children,
   header,
 }) => {
-  console.log(actions);
   return (
     <MuiModal
       open={open}

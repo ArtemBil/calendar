@@ -1,5 +1,6 @@
 import { styled } from "@mui/system";
 import { Box } from "@mui/material";
+import { week } from "@/utils/calendar";
 
 export const WeekDaysList = styled(Box)({
   display: "flex",
@@ -10,10 +11,10 @@ export const WeekDaysList = styled(Box)({
 });
 
 export const WeekDaysListItem = styled(Box, {
-  shouldForwardProp(propName: PropertyKey): propName is ForwardedProps {
+  shouldForwardProp(propName: PropertyKey): boolean {
     return propName !== "weekDays";
   },
-})(({ weekDays }) => ({
+})(({ weekDays }: { weekDays: typeof week }) => ({
   flexBasis: `calc(100% / ${weekDays.length})`,
   padding: "12px",
   borderBottom: "4px solid #E2E4E6",

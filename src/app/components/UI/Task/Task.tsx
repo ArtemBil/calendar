@@ -1,33 +1,37 @@
-import React from "react";
+import React, { MutableRefObject, useRef } from "react";
 import CalendarLabel from "@/app/components/UI/CalendarLabel";
-import TaskCardEditModal from "@/app/components/UI/TaskCardEditModal";
-import useTask from "@/hooks/useTask";
+import useTask from "@/app/components/UI/Task/useTask";
 import { TaskType } from "@/types/calendar-types";
 import { TaskBox } from "@/app/components/UI/Task/style";
+import TaskModal from "@/app/components/UI/TaskModal";
 
 interface TaskProps {
   task: TaskType;
   cellKey: string;
+  index: number;
 }
-const Task: React.FC<TaskProps> = ({ task, cellKey }) => {
-  const { open, handleOpen, drag, handleClose, editTask } = useTask(
-    task,
-    cellKey,
-  );
-  const { taskId, taskContent, labels } = task;
+const Task: React.FC<TaskProps> = ({ task, cellKey, index }) => {
+  const { open, handleOpen, actions, drag, drop, taskRef, handleClose } =
+    useTask(task, cellKey, index);
+  const { id, content, labels } = task;
+  const taskBoxRef = drag(
+    drop(taskRef),
+  ) as unknown as MutableRefObject<HTMLDivElement>;
 
   return (
     <>
-      <TaskBox onClick={handleOpen} ref={drag} key={taskId}>
-        <CalendarLabel labels={labels} />
-        {taskContent}
+      <TaskBox onClick={handleOpen} ref={taskBoxRef} key={id}>
+        {labels && <CalendarLabel labels={labels} />}
+        {content}
       </TaskBox>
-      <TaskCardEditModal
+      <TaskModal
         open={open}
+        header="Edit a task"
         handleClose={handleClose}
-        handleUpdate={editTask}
         labels={labels}
-        content={taskContent}
+        content={content}
+        taskId={id}
+        actions={actions}
       />
     </>
   );

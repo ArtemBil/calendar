@@ -17,4 +17,5 @@ export const AvailableLabelsListItem = styled(Box, {
   color: "white",
   fontSize: "14px",
   letterSpacing: ".8px",
+  cursor: "pointer",
 }));

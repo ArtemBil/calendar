@@ -1,6 +1,5 @@
 import { HolidayType } from "@/types/holiday-types";
-import { CalendarType, TasksType } from "@/types/calendar-types";
-import _ from "lodash";
+import { CalendarType, GridType, TaskType } from "@/types/calendar-types";
 
 export const week = [
   "Sunday",
@@ -16,15 +15,6 @@ export const currentDate = new Date();
 
 export const currentYear = currentDate.getFullYear();
 export const currentMonth = currentDate.getMonth() + 1;
-const newDate = new Date();
-// console.log("Full year -> ", newDate.getFullYear());
-// console.log("Month -> ", newDate.getMonth());
-// console.log("Day -> ", newDate.getDay());
-// console.log("Days in month -> ", newDate.getMonth());
-// nums of days in month in specific
-// const numDays = (y, m) => new Date(y, m, 0).getDate();
-
-// export const getDateData = () =>
 
 export const getPrevYear = (currentDate: Date): Date => {
   const newDate = new Date();
@@ -70,7 +60,6 @@ export const getNextMonth = (currentDate: Date): Date => {
 export const getDaysInMonth = (
   year: number = currentYear,
   month: number = currentMonth,
-  debug = "",
 ): number => {
   return new Date(year, month + 1, 0).getDate();
 };
@@ -87,151 +76,200 @@ const getLastDayOfMonth = (year: number, month: number): Date => {
   return new Date(year, month + 1, 0);
 };
 
-export const generateCalendarCells = (date: Date): CalendarType[] => {
-  const numberOfRows = 6;
-  const numberOfColumns = 7;
-  let arr: CalendarType[] = [];
+//
+// Calendar Cells generation
+// _______________________________
 
-  const prevDateByYearAndMonth = new Date(
+export const options: Intl.DateTimeFormatOptions = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+};
+
+const getPreviousMonthDate = (date: Date): Date => {
+  return new Date(date.getFullYear(), date.getMonth() - 1);
+};
+
+const getNextMonthDate = (date: Date): Date => {
+  return new Date(date.getFullYear(), date.getMonth() + 1);
+};
+
+const getCurrentDateData = (
+  monthDay: number,
+  date: Date,
+  daysInMonth: number,
+) => {
+  const monthText = date.toLocaleString("default", { month: "short" });
+  const day = `${
+    monthDay === 1 || monthDay === daysInMonth ? monthText : ""
+  } ${monthDay}`;
+
+  const dateByMonthDay = new Date(
     date.getFullYear(),
-    date.getMonth() - 1,
+    date.getMonth(),
+    monthDay,
   );
 
-  const nextDateByYearAndMonth = new Date(
+  return {
+    id: dateByMonthDay.toLocaleString("default", options),
+    day: day,
+    isActive: true,
+    isToday:
+      new Date().getDate() === monthDay &&
+      new Date().getFullYear() === date.getFullYear() &&
+      new Date().getMonth() === date.getMonth(),
+  };
+};
+
+const getNextDateData = (
+  nextMonthDay: number,
+  date: Date,
+  nextDateByYearAndMonth: Date,
+  nextMonthDaysInMonth: number,
+) => {
+  const monthText = nextDateByYearAndMonth.toLocaleString("default", {
+    month: "short",
+  });
+
+  const day = `${
+    nextMonthDay === 1 || nextMonthDay === nextMonthDaysInMonth ? monthText : ""
+  } ${nextMonthDay}`;
+  const dateByMonthDay = new Date(
     date.getFullYear(),
     date.getMonth() + 1,
+    nextMonthDay,
   );
 
+  return {
+    id: dateByMonthDay.toLocaleString("default", options),
+    day,
+    isActive: false,
+  };
+};
+
+const getPreviousDateData = (
+  previousMonthDay: number,
+  date: Date,
+  prevDateByYearAndMonth: Date,
+  prevMonthDaysInMonth: number,
+) => {
+  const monthText = prevDateByYearAndMonth.toLocaleString("default", {
+    month: "short",
+  });
+
+  const day = `${
+    previousMonthDay === 1 || previousMonthDay === prevMonthDaysInMonth
+      ? monthText
+      : ""
+  } ${previousMonthDay}`;
+
+  const dateByMonthDay = new Date(
+    date.getFullYear(),
+    date.getMonth() - 1,
+    previousMonthDay,
+  );
+
+  return {
+    id: dateByMonthDay.toLocaleString("default", options),
+    day,
+    isActive: false,
+  };
+};
+
+export const generateCalendarCells = (
+  date: Date,
+  type = GridType.MONTH,
+): CalendarType[] => {
+  const numberOfRows = 6;
+  const numberOfColumns = 7;
+  const calendar: CalendarType[] = [];
+
+  const prevDateByYearAndMonth = getPreviousMonthDate(date);
   const prevMonthDaysInMonth = getDaysInMonth(
     prevDateByYearAndMonth.getFullYear(),
     prevDateByYearAndMonth.getMonth(),
-    "test",
   );
 
-  const daysInMonth = getDaysInMonth(
-    date.getFullYear(),
-    date.getMonth(),
-    "test",
-  );
-
+  const nextDateByYearAndMonth = getNextMonthDate(date);
   const nextMonthDaysInMonth = getDaysInMonth(
     nextDateByYearAndMonth.getFullYear(),
     nextDateByYearAndMonth.getMonth(),
   );
 
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
+  const daysInMonth = getDaysInMonth(date.getFullYear(), date.getMonth());
 
-  // [1, 2, 3, 4, 5, 6, 7]
-  // [1, 2, 3, 4, 5, 6, 7]
-  // [1, 2, 3, 4, 5, 6, 7]
-  // [1, 2, 3, 4, 5, 6, 7]
-  // [1, 2, 3, 4, 5, 6, 7]
-  // [1, 2, 3, 4, 5, 6, 7]
+  const firstDayOfCurrentMonth = getFirstDayOfMonth(
+    date.getFullYear(),
+    date.getMonth(),
+  ).getDay();
 
   for (let i = 0; i < numberOfColumns * numberOfRows; i++) {
-    // get the day index of current month
-    const firstDayOfCurrentMonth = getFirstDayOfMonth(
-      date.getFullYear(),
-      date.getMonth(),
-    ).getDay();
-    // console.log("firstDayOfCurrentMonth", firstDayOfCurrentMonth);
-
-    // if this is true then we should fill in the current month days or the rest of the next month days
-    if (i + 1 > firstDayOfCurrentMonth) {
-      // if this is true then fill in with current month days
+    if (i >= firstDayOfCurrentMonth) {
+      // fill in with current month days
       if (i - firstDayOfCurrentMonth < daysInMonth) {
         const monthDay = i - firstDayOfCurrentMonth + 1;
-        const monthText = date.toLocaleString("default", { month: "short" });
-        const day = `${
-          monthDay === 1 || monthDay === daysInMonth ? monthText : ""
-        } ${monthDay}`;
-        const dateByMonthDay = new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          monthDay,
-        );
-        const weekDay = week[dateByMonthDay.getDay()];
 
-        arr[i] = {
-          id: dateByMonthDay.toLocaleString("default", options),
-          day: day,
-          isActive: true,
-          isToday:
-            new Date().getDate() === monthDay &&
-            new Date().getFullYear() === date.getFullYear() &&
-            new Date().getMonth() === date.getMonth(),
-          weekDay,
-        };
+        calendar[i] = getCurrentDateData(monthDay, date, daysInMonth);
       } else {
-        // fill in the array with the rest of days of next month
-        console.log("Index", i);
-        console.log("firstDayOfCurrentMonth", firstDayOfCurrentMonth);
-        console.log("nextMonthDaysInMonth", nextMonthDaysInMonth);
-        // TODO: Check
+        // fill in with the rest of the days of next month
         const nextMonthDay = i - daysInMonth - firstDayOfCurrentMonth + 1;
-        // i - firstDayOfCurrentMonth + 1 - nextMonthDaysInMonth + 1;
-        //TODO :nextMonthDaysInMonth + 1 ??
-        const monthText = nextDateByYearAndMonth.toLocaleString("default", {
-          month: "short",
-        });
-        // console.log(nextMonthDay);
 
-        const day = `${
-          nextMonthDay === 1 || nextMonthDay === nextMonthDaysInMonth
-            ? monthText
-            : ""
-        } ${nextMonthDay}`;
-        const dateByMonthDay = new Date(
-          date.getFullYear(),
-          date.getMonth() + 1,
+        calendar[i] = getNextDateData(
           nextMonthDay,
+          date,
+          nextDateByYearAndMonth,
+          nextMonthDaysInMonth,
         );
-        const weekDay = week[dateByMonthDay.getDay()];
-
-        arr[i] = {
-          id: dateByMonthDay.toLocaleString("default", options),
-          day,
-          isActive: false,
-          weekDay,
-        };
       }
     } else {
-      // fill in the array with the fields of previous month
+      // fill in with the fields of previous month
       const previousMonthDay =
         prevMonthDaysInMonth - firstDayOfCurrentMonth + i + 1;
-      const monthText = prevDateByYearAndMonth.toLocaleString("default", {
-        month: "short",
-      });
 
-      const day = `${
-        previousMonthDay === 1 || previousMonthDay === prevMonthDaysInMonth
-          ? monthText
-          : ""
-      } ${previousMonthDay}`;
-
-      const dateByMonthDay = new Date(
-        date.getFullYear(),
-        date.getMonth() - 1,
+      calendar[i] = getPreviousDateData(
         previousMonthDay,
+        date,
+        prevDateByYearAndMonth,
+        prevMonthDaysInMonth,
       );
-      const weekDay = week[dateByMonthDay.getDay()];
-
-      arr[i] = {
-        id: dateByMonthDay.toLocaleString("default", options),
-        day,
-        isActive: false,
-        weekDay,
-      };
     }
   }
 
-  // console.log("Result Calendar", arr);
-  return arr;
+  // type = 'month'
+  // for (let i = 0; i < numberOfColumns * numberOfRows; i++) {
+  //   if (i >= firstDayOfCurrentMonth) {
+  //     // fill in with current month days
+  //     if (i - firstDayOfCurrentMonth < daysInMonth) {
+  //       const monthDay = i - firstDayOfCurrentMonth + 1;
+  //
+  //       calendar[i] = getCurrentDateData(monthDay, date, daysInMonth);
+  //     } else {
+  //       // fill in with the rest of the days of next month
+  //       const nextMonthDay = i - daysInMonth - firstDayOfCurrentMonth + 1;
+  //
+  //       calendar[i] = getNextDateData(
+  //           nextMonthDay,
+  //           date,
+  //           nextDateByYearAndMonth,
+  //           nextMonthDaysInMonth,
+  //       );
+  //     }
+  //   } else {
+  //     // fill in with the fields of previous month
+  //     const previousMonthDay =
+  //         prevMonthDaysInMonth - firstDayOfCurrentMonth + i + 1;
+  //
+  //     calendar[i] = getPreviousDateData(
+  //         previousMonthDay,
+  //         date,
+  //         prevDateByYearAndMonth,
+  //         prevMonthDaysInMonth,
+  //     );
+  //   }
+  // }
+
+  return calendar;
 };
 
 export async function loadWorldWideHoliday() {
@@ -250,12 +288,9 @@ export function appendWorldWideHolidays(
   holidays: HolidayType[],
   calendar: CalendarType[],
 ) {
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
+  if (!holidays?.length) {
+    return calendar;
+  }
 
   return calendar.map((date) => {
     const holidaysByDate = holidays.filter((holidayInfo) => {
@@ -271,8 +306,18 @@ export function appendWorldWideHolidays(
   });
 }
 
-export function appendTasks(calendar: CalendarType[], tasks: TasksType) {
+export function appendTasks(calendar: CalendarType[], tasks: TaskType[]) {
+  if (!tasks?.length) {
+    return calendar;
+  }
+
   return calendar.map((date) => {
-    return tasks[date.id] ? { ...date, tasks: tasks[date.id] } : date;
+    const filteredTasksByDate = tasks.filter((task) => {
+      return task.calendarId === date.id;
+    });
+
+    return filteredTasksByDate.length
+      ? { ...date, tasks: filteredTasksByDate }
+      : date;
   });
 }

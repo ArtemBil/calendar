@@ -29,7 +29,7 @@ const CalendarLabel: React.FC<CalendarLabelProps> = ({ labels }) => {
       {labels.map(({ id, color, name }) => {
         return (
           <BootstrapTooltip key={id} title={name} placement="top">
-            <CalendarLabelListItem component="li" color={color} title={name} />
+            <CalendarLabelListItem component="li" color={color} />
           </BootstrapTooltip>
         );
       })}

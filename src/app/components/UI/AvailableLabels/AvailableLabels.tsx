@@ -1,32 +1,30 @@
-import React, { useState } from "react";
-import { useAppSelector } from "@/hooks/store/hooks";
-import { Box, Button } from "@mui/material";
+import React from "react";
 import {
   AvailableLabelsList,
   AvailableLabelsListItem,
 } from "@/app/components/UI/AvailableLabels/style";
-import CreateLabelModal from "@/app/components/UI/CreateLabelModal";
 import LabelModal from "@/app/components/UI/LabelModal";
-import { ActionsType } from "@/types/modal-types";
-import useAvailableLabels from "@/hooks/useAvaliableLabels";
+import useAvailableLabels from "@/app/components/UI/AvailableLabels/useAvaliableLabels";
 
 const AvailableLabels = () => {
   const { open, labels, onLabelClick, handleClose, actions, currentLabelInfo } =
     useAvailableLabels();
 
+  if (!labels?.length) {
+    return null;
+  }
+
   return (
     <>
       <AvailableLabelsList component="ul">
         {labels.map(({ id, name, color }) => (
-          <>
-            <AvailableLabelsListItem
-              key={id}
-              labelColor={color}
-              onClick={onLabelClick(id, name, color)}
-            >
-              #{name}
-            </AvailableLabelsListItem>
-          </>
+          <AvailableLabelsListItem
+            key={id}
+            labelColor={color}
+            onClick={onLabelClick(id, name, color)}
+          >
+            #{name}
+          </AvailableLabelsListItem>
         ))}
       </AvailableLabelsList>
       <LabelModal
@@ -36,7 +34,6 @@ const AvailableLabels = () => {
         actions={actions}
         currentLabelInfo={currentLabelInfo}
       />
-      {/*<CreateLabelModal open={open} handleClose={handleClose} />*/}
     </>
   );
 };

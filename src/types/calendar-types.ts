@@ -7,7 +7,6 @@ export type CalendarType = {
   day: string;
   isActive: boolean;
   isToday?: boolean;
-  weekDay: string;
   holidays?: HolidayType[];
   tasks?: TaskType[];
 };
@@ -20,11 +19,18 @@ export type LabelType = {
 };
 
 export type TaskType = {
-  taskId: string;
-  taskContent: string;
-  labels: LabelType[];
+  id: string;
+  content: string;
+  calendarId: string;
+  labels?: LabelType[];
+  orderNumber: number;
 };
 
 export type TasksType = {
   [key: string]: TaskType[];
 };
+
+export enum GridType {
+  MONTH = "month",
+  WEEK = "week",
+}

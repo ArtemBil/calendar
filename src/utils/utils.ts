@@ -1,9 +1,11 @@
 import html2canvas from "html2canvas";
 import { v1 as uuidv1 } from "uuid";
-import { TasksType } from "@/types/calendar-types";
-import { setTasks } from "@/store/slices/tasks-slice";
+import { TaskType } from "@/types/calendar-types";
+import { ChangeEvent, MutableRefObject } from "react";
 
-export function downloadCalendarHtmlAsImage(calendarRef) {
+export function downloadCalendarHtmlAsImage(
+  calendarRef: MutableRefObject<HTMLElement | null>,
+) {
   calendarRef.current &&
     html2canvas(calendarRef.current).then((canvas) => {
       const id = uuidv1();
@@ -21,7 +23,7 @@ export function downloadCalendarHtmlAsImage(calendarRef) {
     });
 }
 
-export function exportCalendarDataToJsonFile(data: TasksType[]) {
+export function exportCalendarDataToJsonFile(data: TaskType[]) {
   const id = uuidv1();
   const preparedData =
     "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
@@ -38,24 +40,22 @@ export function exportCalendarDataToJsonFile(data: TasksType[]) {
 }
 
 export function importCalendarDataFromJsonFile(
-  event,
-  callback,
-): TasksType[] | undefined {
+  event: ChangeEvent<HTMLInputElement>,
+  callback: (data: string | ArrayBuffer | null) => void,
+) {
   const reader = new FileReader();
 
   reader.addEventListener("load", (event) => {
-    const content = event.target.result;
+    if (event.target) {
+      const content = event.target.result;
 
-    try {
-      const data = JSON.parse(content);
-
-      if (data) {
-        callback(data);
+      if (content) {
+        callback(content);
       }
-    } catch (e) {
-      console.log(e);
     }
   });
 
-  reader.readAsText(event.target.files[0]);
+  if (event.target.files) {
+    reader.readAsText(event.target.files[0]);
+  }
 }

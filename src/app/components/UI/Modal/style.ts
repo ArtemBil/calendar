@@ -16,11 +16,12 @@ export const ModalContent = styled(Box)({
   border: "2px solid brown",
   boxShadow: "24px",
   padding: "24px",
-  borderRadius: "5px",
+  borderRadius: "16px",
 });
 
-export const ButtonGroupActions = styled(ButtonGroup)({
-  display: "block",
+export const ButtonGroupActions = styled(Box)({
+  display: "flex",
+  justifyContent: "space-between",
   marginTop: "12px",
   width: "100%",
 });

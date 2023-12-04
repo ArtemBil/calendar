@@ -5,32 +5,39 @@ import {
   currentDate,
   generateCalendarCells,
   getNextMonth,
-  getNextYear,
   getPrevMonth,
-  getPrevYear,
   loadWorldWideHoliday,
   week,
 } from "@/utils/calendar";
-import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { HolidayType } from "@/types/holiday-types";
 import { CalendarType } from "@/types/calendar-types";
 import _ from "lodash";
+import { useAppDispatch, useAppSelector } from "@/hooks/store/hooks";
+import { loadTasks } from "@/store/slices/tasks-slice";
+import { loadLabels } from "@/store/slices/labels-slice";
 
 export default function useCalendar() {
-  const calendarRef = useRef();
+  const calendarRef = useRef<HTMLDivElement | null>(null);
   const [currentSelectedDate, setCurrentSelectedYear] =
     useState<Date>(currentDate);
-  const tasks = useSelector((state: RootState) => state.tasks);
-  const filteredTasks = useSelector((state: RootState) => state.filteredTasks);
-  const [calendarCellsInitial, setCalendarCellsInitial] = useState([]);
+  const tasks = useAppSelector((state) => state.tasks);
+  const filteredTasks = useAppSelector(
+    (state: RootState) => state.filteredTasks,
+  );
+  const [calendarCellsInitial, setCalendarCellsInitial] = useState<
+    CalendarType[] | []
+  >([]);
   const [loading, setIsLoading] = useState(true);
-  const [calendarCells, setCalendarCells] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [calendarCells, setCalendarCells] = useState<CalendarType[] | []>([]);
   const [weekDays, setWeekDays] = useState(week);
   const [holidays, setHolidays] = useState<HolidayType[] | []>([]);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(loadTasks());
+    dispatch(loadLabels());
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -47,17 +54,6 @@ export default function useCalendar() {
     currentSelectedDate.toLocaleString("default", { month: "long" }) +
     " " +
     currentSelectedDate.getFullYear();
-
-  const onPreviousYearClick = () => {
-    const previousYearDate = getPrevYear(currentSelectedDate);
-    setCurrentSelectedYear(previousYearDate);
-  };
-
-  const onNextYearClick = () => {
-    const nextYearDate = getNextYear(currentSelectedDate);
-
-    setCurrentSelectedYear(nextYearDate);
-  };
 
   const onPreviousMonthClick = () => {
     const previousMonthDate = getPrevMonth(currentSelectedDate);
@@ -85,7 +81,6 @@ export default function useCalendar() {
   }, [currentSelectedDate, tasks, holidays]);
 
   useEffect(() => {
-    console.log("Trigger");
     setCalendarCells(calendarCellsInitial);
   }, [calendarCellsInitial]);
 
@@ -97,9 +92,9 @@ export default function useCalendar() {
 
   useEffect(() => {
     if (calendarCells.length) {
-      const newWeeks = week.filter((weekDay) => {
+      const newWeeks = week.filter((weekDay, index, array) => {
         return calendarCells.find((calendar: CalendarType) => {
-          return calendar && calendar.weekDay === weekDay;
+          return calendar && array[new Date(calendar.id).getDay()] === weekDay;
         });
       });
 
@@ -110,16 +105,11 @@ export default function useCalendar() {
   }, [calendarCells]);
 
   return {
-    open,
-    handleClose,
     loading,
     calendarCellsInitial,
     tasks,
     onPreviousMonthClick,
     onNextMonthClick,
-    handleOpen,
-    onPreviousYearClick,
-    onNextYearClick,
     calendarRef,
     currentDateTitle,
     weekDays,
