@@ -1,7 +1,7 @@
 import prisma from "@/utils/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { LabelType } from "@/types/calendar-types";
-
+export const dynamic = "force-dynamic";
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const {

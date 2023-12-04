@@ -25,6 +25,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@types/lodash": "^4.14.202",
     "@types/uuid": "^9.0.7",
+    "axios": "^1.6.2",
     "dotenv-cli": "^7.3.0",
     "html2canvas": "^1.4.1",
     "install": "^0.13.0",

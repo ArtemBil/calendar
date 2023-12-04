@@ -18,7 +18,7 @@ const materialTheme = createTheme({
       styleOverrides: {
         root: {
           width: "100%",
-          margin: "0 8px 16px 0",
+          margin: "12px 8px 16px 0",
         },
       },
     },
