@@ -8,14 +8,14 @@ import {
   ColorPickerFieldContainer,
   ColorPickerOverlay,
   SelectedColorBox,
-} from "@/app/components/UI/CreateLabelModal/style";
-import { useLabelModal } from "@/hooks/useLabelModal";
-import { ActionsType } from "@/types/modal-types";
+} from "@/app/components/UI/LabelModal/style";
+import { useLabelModal } from "@/app/components/UI/LabelModal/useLabelModal";
+import { ActionsType, OnModalClose } from "@/types/modal-types";
 import { LabelType } from "@/types/calendar-types";
 
 interface CreateLabelModalProps {
   open: boolean;
-  handleClose: Function;
+  handleClose: OnModalClose;
   actions: ActionsType[];
   header: string;
   currentLabelInfo?: LabelType;
@@ -37,7 +37,7 @@ const LabelModal: React.FC<CreateLabelModalProps> = ({
     onColorPickBoxClick,
     onColorPickerOverlayClick,
     handleInputChange,
-  } = useLabelModal(handleClose, actions, currentLabelInfo);
+  } = useLabelModal(actions, currentLabelInfo);
 
   return (
     <Modal
@@ -66,12 +66,14 @@ const LabelModal: React.FC<CreateLabelModalProps> = ({
 
       <FormControl>
         <TextField
+          error={!labelName.length}
           id="standard-basic"
           label="Label name"
-          required={false}
-          variant="standard"
+          required={true}
+          variant="outlined"
           value={labelName}
           onChange={handleInputChange}
+          helperText={!labelName.length && "This is a required field"}
         />
       </FormControl>
     </Modal>

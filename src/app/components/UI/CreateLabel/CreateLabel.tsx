@@ -3,9 +3,8 @@ import { Button } from "@mui/material";
 import LabelModal from "@/app/components/UI/LabelModal";
 import { ActionsType, LabelActions } from "@/types/modal-types";
 import { v1 as uuidv1 } from "uuid";
-import { addLabel } from "@/store/slices/labels-slice";
+import { createLabel } from "@/store/slices/labels-slice";
 import { useAppDispatch } from "@/hooks/store/hooks";
-import { LabelType } from "@/types/calendar-types";
 
 const CreateLabel = () => {
   const [open, setOpen] = useState(false);
@@ -14,14 +13,26 @@ const CreateLabel = () => {
   const dispatch = useAppDispatch();
 
   const handleSaveLabelClick =
-    ({ name, color }: LabelType) =>
-    (event) => {
-      if (name && color) {
-        const id = uuidv1();
-        dispatch(addLabel({ id, name, color }));
-      }
+    ({
+      name,
+      color,
+      afterAction,
+      validate,
+    }: {
+      name: string;
+      color: string;
+      afterAction: () => void;
+      validate: () => boolean;
+    }) =>
+    () => {
+      if (validate()) {
+        handleClose();
 
-      handleClose();
+        const id = uuidv1();
+        dispatch(createLabel({ id, name, color }));
+
+        afterAction();
+      }
     };
 
   const actions: ActionsType[] = [
@@ -29,7 +40,7 @@ const CreateLabel = () => {
       id: LabelActions.CREATE,
       render(actionInfo): React.ReactNode {
         return (
-          <Button onClick={handleSaveLabelClick(actionInfo)}>Create1</Button>
+          <Button onClick={handleSaveLabelClick(actionInfo)}>Create</Button>
         );
       },
     },

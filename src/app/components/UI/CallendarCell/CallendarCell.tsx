@@ -2,7 +2,7 @@ import React from "react";
 import { CalendarType } from "@/types/calendar-types";
 import Holidays from "@/app/components/UI/Holidays";
 import Tasks from "@/app/components/UI/Tasks/Tasks";
-import useCalendarCell from "@/hooks/useCalendarCell";
+import useCalendarCell from "@/app/components/UI/CallendarCell/useCalendarCell";
 import {
   ListItem,
   CalendarCellCardCounter,
@@ -15,8 +15,13 @@ const CalendarCell: React.FC<
     weekDays: string[];
   }
 > = ({ id, isActive, isToday, day, holidays, tasks, weekDays }) => {
-  const { drop, taskModalOpen, handleTaskModalOpen, handleTaskModalClose } =
-    useCalendarCell(id);
+  const {
+    drop,
+    taskModalOpen,
+    handleTaskModalOpen,
+    handleTaskModalClose,
+    isOver,
+  } = useCalendarCell(id);
   const cardsCount =
     Array.isArray(tasks) && tasks.length
       ? `${tasks.length} ${tasks.length === 1 ? " card" : " cards"}`
@@ -31,6 +36,7 @@ const CalendarCell: React.FC<
         isActive={isActive}
         weekDays={weekDays}
         isToday={isToday}
+        isOver={isOver}
       >
         <CalendarCellHeaderBox>
           <CalendarCellDay isActive={isActive}>{day}</CalendarCellDay>
@@ -42,6 +48,7 @@ const CalendarCell: React.FC<
           tasks={tasks}
           cellKey={id}
           open={taskModalOpen}
+          // @ts-ignore
           handleClose={handleTaskModalClose}
         />
       </ListItem>

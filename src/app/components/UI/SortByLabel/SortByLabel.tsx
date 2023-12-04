@@ -1,53 +1,47 @@
 import React from "react";
-import {
-  Box,
-  Chip,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-} from "@mui/material";
+import { Autocomplete, FormControl, MenuItem, TextField } from "@mui/material";
 import { CalendarType } from "@/types/calendar-types";
-import useSortByLabel from "@/hooks/useSortByLabel";
+import useSortByLabel from "@/app/components/UI/SortByLabel/useSortByLabel";
+import { Check } from "@mui/icons-material";
 
 interface SortByLabelProps {
   calendar: CalendarType[];
 }
 const SortByLabel: React.FC<SortByLabelProps> = ({ calendar }) => {
-  const { taskLabels, handleChange, allLabels } = useSortByLabel(calendar);
+  const { handleChange, allLabels } = useSortByLabel(calendar);
 
   return (
-    <Box>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-chip-label">
-          Select label to filter
-        </InputLabel>
-        <Select
-          labelId="demo-multiple-chip-label"
-          id="demo-multiple-chip"
-          multiple
-          size="small"
-          required={false}
-          value={taskLabels}
-          onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-          renderValue={(selected) => (
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selected.map(({ id, name }) => (
-                <Chip key={id} label={name} />
-              ))}
-            </Box>
-          )}
-        >
-          {allLabels.map((label) => (
-            <MenuItem key={label.id} value={label}>
-              {label.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </Box>
+    <FormControl>
+      <Autocomplete
+        multiple
+        options={allLabels}
+        getOptionLabel={(option) => option.name}
+        isOptionEqualToValue={(option, value) => {
+          return option.id === value.id;
+        }}
+        onChange={handleChange}
+        disableCloseOnSelect
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant="outlined"
+            label="Search by label"
+            placeholder="Search/Select labels"
+          />
+        )}
+        renderOption={(props, option, { selected }) => (
+          <MenuItem
+            {...props}
+            key={option.id}
+            value={option.name}
+            sx={{ justifyContent: "space-between" }}
+          >
+            {option.name}
+            {selected ? <Check color="info" /> : null}
+          </MenuItem>
+        )}
+      />
+    </FormControl>
   );
 };
 

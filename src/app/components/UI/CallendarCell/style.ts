@@ -3,18 +3,21 @@ import { Box } from "@mui/material";
 
 export const ListItem = styled(Box, {
   shouldForwardProp(propName: PropertyKey) {
-    return !["isActive", "weekDays", "isToday"].includes(propName as string);
+    return !["isActive", "weekDays", "isToday", "isOver"].includes(
+      propName as string,
+    );
   },
 })(
   (props: {
     isActive: boolean;
     weekDays: string[];
     isToday: boolean | undefined;
+    isOver: boolean;
   }) => ({
     background: props.isToday ? "#bcbec0" : "#E2E4E6",
     height: 200,
     padding: "8px",
-    border: "2px solid #EEEFF1",
+    border: props.isOver ? "2px dotted blue" : "2px solid #EEEFF1",
     borderRadius: "8px",
     overflow: "auto",
     cursor: "pointer",

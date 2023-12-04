@@ -1,22 +1,25 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useAppDispatch } from "@/hooks/store/hooks";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "@/types/item-types";
 import { updateTaskPosition } from "@/store/slices/tasks-slice";
 
 type dropProps = {
-  taskId: string;
-  cellKey: string;
+  id: string;
+  currentPosition: string;
 };
 
 export default function useCalendarCell(id: string) {
   const [taskModalOpen, setTaskModalOpen] = useState(false);
+  const taskRef = useRef();
   const dispatch = useAppDispatch();
 
   const [dropInfo, drop] = useDrop({
     accept: ItemTypes.CARD,
     drop: (data: dropProps) => {
-      dispatch(updateTaskPosition({ ...data, key: id }));
+      if (data.currentPosition !== id) {
+        dispatch(updateTaskPosition({ ...data, targetPosition: id }));
+      }
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
@@ -35,6 +38,7 @@ export default function useCalendarCell(id: string) {
   };
 
   return {
+    taskRef,
     taskModalOpen,
     handleTaskModalOpen,
     handleTaskModalClose,

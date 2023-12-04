@@ -11,9 +11,10 @@ interface HolidaysProps {
 const Holidays: React.FC<HolidaysProps> = ({ holidays }) => {
   return (
     <HolidaysList className="holidays" component="ul">
-      {holidays.map(({ date, localName }) => {
+      {holidays.map(({ date, localName, name }, index) => {
+        const key = `${date}-${localName}-${name}-${index}`;
         return (
-          <HolidaysListItem key={date + localName} component="li">
+          <HolidaysListItem key={key} component="li">
             {localName}
           </HolidaysListItem>
         );

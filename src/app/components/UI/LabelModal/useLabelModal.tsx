@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { ActionsType, LabelActions } from "@/types/modal-types";
 import { LabelType } from "@/types/calendar-types";
+import { ColorChangeHandler, ColorResult } from "react-color";
 
 export function useLabelModal(
-  handleClose,
   actions: ActionsType[],
-  currentLabelInfo: LabelType,
+  currentLabelInfo: LabelType | undefined,
 ) {
   const [labelInfo, setLabelInfo] = useState<LabelType>({
     color: "",
@@ -19,11 +19,16 @@ export function useLabelModal(
       setLabelInfo((prevState) => ({ ...prevState, ...currentLabelInfo }));
     }
   }, [currentLabelInfo]);
-  const handleInputChange = (event) => {
+  const handleInputChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setLabelInfo((prevState) => ({ ...prevState, name: event.target.value }));
   };
 
-  const onColorPickerChange = (color, event) => {
+  const onColorPickerChange = (
+    color: ColorResult,
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
     setLabelInfo((prevState) => ({ ...prevState, color: color.hex }));
   };
 
@@ -36,13 +41,38 @@ export function useLabelModal(
   };
 
   const actionsWithData = actions.map((action: ActionsType) => {
-    return action.id === LabelActions.CREATE ||
+    if (
+      action.id === LabelActions.CREATE ||
       action.id === LabelActions.UPDATE
-      ? {
-          ...action,
-          actionInfo: labelInfo,
-        }
-      : action;
+    ) {
+      return {
+        ...action,
+        actionInfo: {
+          ...labelInfo,
+          afterAction: () => {
+            setLabelInfo({
+              name: "",
+              color: "",
+              id: "",
+            });
+          },
+          validate: () => {
+            return !!labelInfo.name && !!labelInfo.color;
+          },
+        },
+      };
+    }
+
+    if (action.id === LabelActions.DELETE && labelInfo.id) {
+      return {
+        ...action,
+        actionInfo: {
+          id: labelInfo.id,
+        },
+      };
+    }
+
+    return action;
   });
 
   return {

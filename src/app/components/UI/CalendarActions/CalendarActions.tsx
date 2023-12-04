@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Box, Button, Drawer, Popover, Typography } from "@mui/material";
+import React from "react";
+import { Box, Button, Popover } from "@mui/material";
 
 interface CalendarActionsProps {
   children: React.ReactNode;
@@ -11,7 +11,6 @@ const CalendarActions: React.FC<CalendarActionsProps> = ({ children }) => {
   );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(event.currentTarget);
     setAnchorEl(event.currentTarget);
   };
 
@@ -24,7 +23,7 @@ const CalendarActions: React.FC<CalendarActionsProps> = ({ children }) => {
 
   return (
     <>
-      <div>
+      <Box>
         <Button aria-describedby={id} variant="contained" onClick={handleClick}>
           Actions
         </Button>
@@ -46,7 +45,7 @@ const CalendarActions: React.FC<CalendarActionsProps> = ({ children }) => {
             {children}
           </Box>
         </Popover>
-      </div>
+      </Box>
     </>
   );
 };
